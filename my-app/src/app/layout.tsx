@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { SessionProvider } from "@/providers/session-provider";
 import MiniKitProvider from "@/providers/minikit-provider";
+import "@worldcoin/mini-apps-ui-kit-react/styles.css";
 import { ErudaProvider } from "@/providers/eruda-provider";
 import "./globals.css";
 
