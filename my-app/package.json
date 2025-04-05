@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@worldcoin/mini-apps-ui-kit-react": "^0.0.8",
     "@worldcoin/minikit-js": "^1.7.0",
     "@worldcoin/minikit-react": "^1.8.0",
     "class-variance-authority": "^0.7.1",
