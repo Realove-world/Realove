@@ -104,7 +104,7 @@ export default function Page() {
     <div className="relative flex flex-col h-[100dvh] bg-white safe-area-inset overflow-hidden">
     {/* Background Image */}
     <img
-      src="/front-page.png"
+      src="/image.png"
       alt="Background"
       className="absolute top-0 left-0 w-full h-full object-cover opacity-15 pointer-events-none"
     />
