@@ -105,10 +105,9 @@ export default function Page() {
     {/* Background Image */}
     <img
       src="/front-page.png"
-      /*alt="Background"*/
-      className="absolute inset-0 w-full h-full object-cover opacity-100 z-[-1]"
+      alt="Background"
+      className="absolute top-0 left-0 w-full h-full object-cover opacity-15 pointer-events-none"
     />
-    <img src="/front-page.png" className="absolute inset-0 w-full h-full object-cover opacity-10 z-[-1]" />
 
   
       {/* Main Content */}

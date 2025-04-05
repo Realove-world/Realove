@@ -41,13 +41,13 @@ export default function Page() {
         <Typography level={1} 
         className="text-6xl"
         variant="heading">
-          Realove
+          Realove 💖
         </Typography>
 
         <Typography level={1} 
         className="text-2xl"
         variant="subtitle">
-          The first dating app with only real humans.
+          Let's find your soulmate! {username}
         </Typography>
 
         <Input
@@ -59,7 +59,7 @@ export default function Page() {
 
         <Select
           onChange={(selectedOption) => setAge(selectedOption?.value || "")}
-          placeholder="Please Confirm Your Age"
+          placeholder="Select your age"
           value={ageOptions.find((option) => option.value === age)}
           options={ageOptions}
         />
