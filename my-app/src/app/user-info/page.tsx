@@ -87,7 +87,7 @@ export default function Page() {
             app_id: process.env.NEXT_PUBLIC_WLD_APP_ID,
             users: [world_username],
             title: "Welcome to Realove!",
-            message: "Your profile has been created successfully. Let's find your soulmate! �"
+            message: "Your profile has been created successfully. Let's find your soulmate! 💖"
           })
         });
 
