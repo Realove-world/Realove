@@ -67,6 +67,14 @@ export default function Page() {
 
   return (
     <div className="flex flex-col h-[100dvh] bg-white safe-area-inset">
+
+          {/* Background Image */}
+    <img
+      src="/user-info-2.png"
+      alt="Background"
+      className="absolute top-0 left-0 w-full h-full object-cover opacity-15 pointer-events-none"
+    />
+
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-8 gap-8">
         <Typography level={1} 
         className="text-6xl"

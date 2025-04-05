@@ -41,7 +41,7 @@ export default function Page() {
 </button>
 
 <button className="w-[80%] relative px-4 py-2 bg-white border-2 border-black rounded-md text-black font-mono text-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] transition-all duration-100">
-  Skip For Now...
+  Test for 0.01 Wld...
 </button>
 
        
