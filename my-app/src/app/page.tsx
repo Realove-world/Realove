@@ -9,6 +9,8 @@ import { WalletAuthButton } from "@/components/wallet-auth-button";
 import { useWaitForTransactionReceipt } from "@worldcoin/minikit-react";
 import { createPublicClient, http } from "viem";
 import { worldchain } from "@/lib/chains";
+import { Button } from "@worldcoin/mini-apps-ui-kit-react";
+import { Typography } from "@worldcoin/mini-apps-ui-kit-react";
 import { TransactionStatus } from "@/components/TransactionStatus";
 
 // // This would come from environment variables in a real app
@@ -102,13 +104,20 @@ export default function Page() {
     <div className="flex flex-col h-[100dvh] bg-white safe-area-inset">
       {/* Main Content */}
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-8 gap-8">
-        <h1 className="text-3xl font-bold text-purple-600">TUTE App</h1>
+        <h1 className="text-5xl font-bold text-black-600">Realove</h1>
 
+        <Typography
+          level={2}
+          variant="subtitle"
+        >
+            The first dating app with only real human.
+        </Typography>
+        
         {tuteClaimed ? (
           <TuteTimer timeRemaining={timeRemaining} />
         ) : (
           <>
-            <div className="text-center mb-6">
+            {/*<div className="text-center mb-6">
               <p className="text-lg">
                 {!walletConnected
                   ? "Connect your wallet to continue"
@@ -136,7 +145,7 @@ export default function Page() {
                 isConfirmed={isConfirmed}
                 isMinting={isMinting}
               />
-            </div>
+            </div>*/}
 
             {!walletConnected ? (
               <WalletAuthButton onSuccess={handleWalletConnected} />
