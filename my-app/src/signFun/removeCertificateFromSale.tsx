@@ -1,14 +1,15 @@
 import { MiniKit } from '@worldcoin/minikit-js';
 import TravelCertificateShopABI from '../lib/travalABI.json';
-const purchaseCertificate = async () => {
+
+const removeCertificateFromSale = async (certificateId: number) => {
     if (!MiniKit.isInstalled()) {
       console.log('MiniKit 未安裝');
       return;
     }
   
     const contractAddress = '0xYourContractAddress';
-    const certificateId = '1'; // 要購買的憑證 ID
-    const salePrice = '1000000000000000000'; // 假設售價為 1 ETH
+    const functionName = 'removeCertificateFromSale';
+    const args = [certificateId.toString()];
   
     try {
       const payload = await MiniKit.commandsAsync.sendTransaction({
@@ -16,16 +17,16 @@ const purchaseCertificate = async () => {
           {
             address: contractAddress,
             abi: TravelCertificateShopABI,
-            functionName: 'purchaseCertificate',
-            args: [certificateId],
-            value: salePrice, // 支付的 ETH 數量（以 wei 為單位）
+            functionName: functionName,
+            args: args,
           },
         ],
       });
-      console.log('購買交易已發送:', payload);
+      console.log('憑證已下架:', payload);
     } catch (error) {
-      console.error('購買交易錯誤:', error);
+      console.error('下架憑證錯誤:', error);
     }
   };
   
-    //purchaseCertificate();
+  // 使用示例
+    //removeCertificateFromSale(1);
