@@ -12,6 +12,7 @@ import { worldchain } from "@/lib/chains";
 import { Button } from "@worldcoin/mini-apps-ui-kit-react";
 import { Typography } from "@worldcoin/mini-apps-ui-kit-react";
 import { TransactionStatus } from "@/components/TransactionStatus";
+import { useRouter } from "next/navigation";
 
 // // This would come from environment variables in a real app
 // const APP_ID =
@@ -27,6 +28,7 @@ export default function Page() {
   const [claimCount, setClaimCount] = useState(0);
   const [transactionId, setTransactionId] = useState<string>("");
   const [isMinting, setIsMinting] = useState(false);
+  const router = useRouter();
 
   // Initialize Viem client
   const client = createPublicClient({
@@ -47,8 +49,8 @@ export default function Page() {
   // Check if user is authenticated when session changes
   useEffect(() => {
     if (status === "authenticated" && session?.user?.address) {
-      setWalletConnected(true);
       console.log("User authenticated:", session.user);
+      // Remove automatic handleWalletConnected call
     }
   }, [session, status]);
 
@@ -62,9 +64,27 @@ export default function Page() {
   }, [isConfirmed, tuteClaimed]);
 
   // Handle wallet connection success
-  const handleWalletConnected = () => {
+  const handleWalletConnected = async () => {
+    console.log("handleWalletConnected called");
     setWalletConnected(true);
-    console.log("Wallet connected");
+    
+    // Wait for session to be updated
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Get the username from the session
+    const world_username = session?.user?.name;
+    console.log("Current session:", session);
+    console.log("World username:", world_username);
+    
+    // Ensure we have a username before redirecting
+    if (world_username) {
+      // Use window.location for navigation
+      const url = `/user-info?username=${encodeURIComponent(world_username)}`;
+      console.log("Redirecting to:", url);
+      window.location.href = url;
+    } else {
+      console.error("No username found in session");
+    }
   };
 
   // Handle verification success
@@ -122,7 +142,8 @@ export default function Page() {
           <TuteTimer timeRemaining={timeRemaining} />
         ) : (
           <>
-            {!walletConnected ? (
+            {/* {!walletConnected ? ( */}
+            {true ? (
               <WalletAuthButton onSuccess={handleWalletConnected} />
             ) : !verified ? (
               <VerifyButton onVerificationSuccess={handleVerificationSuccess} />
