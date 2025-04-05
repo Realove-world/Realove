@@ -113,7 +113,3 @@ Questions or feedback? Feel free to reach out!
 - [Developer Portal](https://developer.worldcoin.org/)
 
 ---
-# Realove
-# Realove
-# Realove
-# Realove
