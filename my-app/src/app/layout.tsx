@@ -3,15 +3,15 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { SessionProvider } from "@/providers/session-provider";
 import MiniKitProvider from "@/providers/minikit-provider";
-import "@worldcoin/mini-apps-ui-kit-react/styles.css";
+
 import { ErudaProvider } from "@/providers/eruda-provider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "TUTE App",
-  description: "Claim your TUTE tokens",
+  title: "Realove",
+  description: "The first dating app with only real humans.",
   viewport:
     "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover",
 };

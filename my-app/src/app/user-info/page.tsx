@@ -1,40 +1,53 @@
 "use client";
-import { Input } from "@worldcoin/mini-apps-ui-kit-react";
-import { Shield } from "lucide-react";
-import { Typography } from "@worldcoin/mini-apps-ui-kit-react";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { Select } from "@worldcoin/mini-apps-ui-kit-react"
 
-// // This would come from environment variables in a real app
-// const APP_ID =
-//   process.env.NEXT_PUBLIC_WORLDCOIN_APP_ID ||
-//   "app_9a73963d73efdf2e7d9472593dc9dffd";
+import { useState } from "react";
+import { Input, Select, Typography, Button } from "@worldcoin/mini-apps-ui-kit-react";
+import "@worldcoin/mini-apps-ui-kit-react/styles.css";
 
 export default function Page() {
-  const [username, setUsername] = useState('')
-  const [age, setAge] = useState('')
-  const ageOptions = Array.from({ length: 13}, (_, i) => ({
+  const [username, setUsername] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+
+  const ageOptions = Array.from({ length: 53 }, (_, i) => ({
     label: `${i + 18}`,
     value: `${i + 18}`,
-}));
-  const [isOpen, setIsOpen] = useState(false);
-  const [gender, setGender] = useState(null);
-  const genderOptions = ['Male', 'Female', 'Non-binary', 'Prefer not to say']
+  }));
 
+  const genderOptions = [
+    "Male",
+    "Female",
+    "Non-binary",
+    "Prefer not to say",
+  ].map((option) => ({
+    label: option,
+    value: option,
+  }));
+
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedImage(file);
+      setPreviewUrl(URL.createObjectURL(file));
+    }
+  };
 
   return (
     <div className="flex flex-col h-[100dvh] bg-white safe-area-inset">
-      {/* Main Content */}
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-8 gap-8">
-        <h1 className="text-5xl font-bold text-black-600">Realove</h1>
+        <Typography level={1} 
+        className="text-6xl"
+        variant="heading">
+          Realove
+        </Typography>
 
-        <Typography
-          level={2}
-          variant="subtitle"
-        >
-            The first dating app with only real human.
+        <Typography level={1} 
+        className="text-2xl"
+        variant="subtitle">
+          The first dating app with only real humans.
         </Typography>
 
         <Input
@@ -43,32 +56,49 @@ export default function Page() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        
+
         <Select
-          onChange={(selectedOption) => {
-            setAge(selectedOption?.value || '');
-          }}
+          onChange={(selectedOption) => setAge(selectedOption?.value || "")}
           placeholder="Please Confirm Your Age"
-          value={ageOptions.find(option => option.value === age)}
-          options = {ageOptions}
+          value={ageOptions.find((option) => option.value === age)}
+          options={ageOptions}
         />
 
         <Select
-          onChange={(selectedOption) => {
-            setGender(selectedOption?.value || '');
-          }}
+          onChange={(selectedOption) => setGender(selectedOption?.value || "")}
           placeholder="Select your gender"
-          value={genderOptions
-            .map(option => ({ label: option, value: option }))
-            .find(option => option.value === gender)}
-          
-          options={genderOptions.map(option => ({
-            label: option,
-            value: option,
-          }))}
+          value={genderOptions.find((option) => option.value === gender)}
+          options={genderOptions}
         />
- 
 
+<label className="w-40 h-40 flex flex-col items-center justify-center bg-gray-100 text-gray-400 border border-dashed border-gray-300 rounded-xl overflow-hidden cursor-pointer hover:bg-gray-200 transition">
+  {previewUrl ? (
+    <img
+      src={previewUrl}
+      alt="Preview"
+      className="w-full h-full object-cover"
+    />
+  ) : (
+    <>
+      <span className="text-sm">Best photo of you</span>
+    </>
+  )}
+  <input
+    type="file"
+    accept="image/*"
+    onChange={handleImageChange}
+    className="hidden"
+  />
+</label>
+
+        <Button
+          onClick={function Ki(){}}
+          radius="md"
+          size="lg"
+          variant="secondary"
+        >
+          Submit
+        </Button>
       </div>
     </div>
   );
