@@ -75,7 +75,7 @@ export default function Page() {
       const permissionResponse = await MiniKit.commandsAsync.requestPermission(requestPermissionPayload);
       console.log("Permission response:", permissionResponse);
 
-      if (permissionResponse.finalPayload.status === 'success') {
+      if (permissionResponse.status === 'success') {
         // Send notification
         const notificationResponse = await fetch('https://developer.worldcoin.org/api/v2/minikit/send-notification', {
           method: 'POST',

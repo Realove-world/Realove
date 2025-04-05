@@ -74,31 +74,36 @@ export default function Page() {
     const delay = 1000; // 1 second delay between attempts
     
     while (attempts < maxAttempts) {
-      console.log(`Attempt ${attempts + 1} to get session data`);
-      
-      // Get the username from the session
-      const world_username = session?.user?.name;
-      console.log("Current session:", session);
-      console.log("World username:", world_username);
-      
-      if (world_username) {
-        try {
+      try {
+        console.log(`Attempt ${attempts + 1} to get session data`);
+        
+        // Get the username from the session
+        const world_username = session?.user?.name;
+        console.log("Current session:", session);
+        console.log("World username:", world_username);
+        
+        if (world_username) {
           // Add a small delay before navigation to ensure state is stable
-          await new Promise(resolve => setTimeout(resolve, 500));
+          await new Promise(resolve => setTimeout(resolve, 1000));
           
           // Use window.location for navigation in App Router
           const url = `/user-info?username=${encodeURIComponent(world_username)}`;
           console.log("Redirecting to:", url);
           window.location.href = url;
           return;
-        } catch (error) {
-          console.error("Navigation error:", error);
         }
+        
+        // Wait before next attempt
+        await new Promise(resolve => setTimeout(resolve, delay));
+        attempts++;
+      } catch (error) {
+        console.error("Error during wallet connection:", error);
+        // If we get a DOMException, wait a bit longer before retrying
+        if (error instanceof DOMException) {
+          await new Promise(resolve => setTimeout(resolve, delay * 2));
+        }
+        attempts++;
       }
-      
-      // Wait before next attempt
-      await new Promise(resolve => setTimeout(resolve, delay));
-      attempts++;
     }
     
     console.error("Failed to get username after multiple attempts");
