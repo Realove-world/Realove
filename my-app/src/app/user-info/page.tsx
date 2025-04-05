@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Input, Select, Typography, Button } from "@worldcoin/mini-apps-ui-kit-react";
 import "@worldcoin/mini-apps-ui-kit-react/styles.css";
 import { useRouter, useSearchParams } from "next/navigation";
+import { MiniKit, RequestPermissionPayload, Permission } from '@worldcoin/minikit-js';
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -31,7 +32,7 @@ export default function Page() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    // Get username from URL
+    // Get username from URL parameters
     const params = new URLSearchParams(window.location.search);
     const urlUsername = params.get('username');
     console.log("Raw URL:", window.location.href);
@@ -65,21 +66,66 @@ export default function Page() {
     }
   };
 
+  const handleSubmit = async () => {
+    try {
+      // First request notification permission
+      const requestPermissionPayload: RequestPermissionPayload = {
+        permission: Permission.Notifications,
+      };
+      const permissionResponse = await MiniKit.commandsAsync.requestPermission(requestPermissionPayload);
+      console.log("Permission response:", permissionResponse);
+
+      if (permissionResponse.finalPayload.status === 'success') {
+        // Send notification
+        const notificationResponse = await fetch('https://developer.worldcoin.org/api/v2/minikit/send-notification', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.DEV_PORTAL_API_KEY}`
+          },
+          body: JSON.stringify({
+            app_id: process.env.NEXT_PUBLIC_WLD_APP_ID,
+            users: [world_username],
+            title: "Welcome to Realove!",
+            message: "Your profile has been created successfully. Let's find your soulmate! �"
+          })
+        });
+
+        const notificationResult = await notificationResponse.json();
+        console.log("Notification result:", notificationResult);
+      }
+
+      // Log user info
+      console.log("Submitting user info:", {
+        world_username,
+        username,
+        age,
+        gender
+      });
+      
+      // Navigate to event-page
+      window.location.href = '/event-page';
+    } catch (error) {
+      console.error("Error in handleSubmit:", error);
+      alert("There was an error processing your submission. Please try again.");
+    }
+  };
+
   return (
     <div className="flex flex-col h-[100dvh] bg-white safe-area-inset">
 
-          {/* Background Image */}
-    <img
-      src="/user-info-2.png"
-      alt="Background"
-      className="absolute top-0 left-0 w-full h-full object-cover opacity-15 pointer-events-none"
-    />
+      {/* Background Image */}
+      <img
+        src="/user-info-2.png"
+        alt="Background"
+        className="absolute top-0 left-0 w-full h-full object-cover opacity-15 pointer-events-none"
+      />
 
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-8 gap-8">
         <Typography level={1} 
         className="text-6xl"
         variant="heading">
-          Realove 💖
+          Realove �
         </Typography>
 
         <Typography level={1} 
@@ -130,7 +176,7 @@ export default function Page() {
         </label>
 
         <Button
-          onClick={function Ki(){}}
+          onClick={handleSubmit}
           radius="md"
           size="lg"
           variant="secondary"

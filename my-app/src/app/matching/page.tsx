@@ -21,11 +21,11 @@ export default function Page() {
     <div {...swipeHandlers} className="flex flex-col h-[100dvh] bg-white safe-area-inset touch-pan-x">
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-8">
         <Typography level={1} className="text-5xl" variant="heading">
-          Realove 💖
+          Realove �
         </Typography>
 
         <main className="bg-cream flex items-center justify-center">
-          <ProfileCard imageUrl={"/Anny.JPG"} />
+          <ProfileCard imageUrl={"/Anny.JPG"} username="anny.4846" />
         </main>
       </div>
     </div>

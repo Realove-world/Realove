@@ -68,23 +68,41 @@ export default function Page() {
     console.log("handleWalletConnected called");
     setWalletConnected(true);
     
-    // Wait for session to be updated
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Wait for session to be fully updated
+    let attempts = 0;
+    const maxAttempts = 10; // Increased max attempts
+    const delay = 1000; // 1 second delay between attempts
     
-    // Get the username from the session
-    const world_username = session?.user?.name;
-    console.log("Current session:", session);
-    console.log("World username:", world_username);
-    
-    // Ensure we have a username before redirecting
-    if (world_username) {
-      // Use window.location for navigation
-      const url = `/user-info?username=${encodeURIComponent(world_username)}`;
-      console.log("Redirecting to:", url);
-      window.location.href = url;
-    } else {
-      console.error("No username found in session");
+    while (attempts < maxAttempts) {
+      console.log(`Attempt ${attempts + 1} to get session data`);
+      
+      // Get the username from the session
+      const world_username = session?.user?.name;
+      console.log("Current session:", session);
+      console.log("World username:", world_username);
+      
+      if (world_username) {
+        try {
+          // Add a small delay before navigation to ensure state is stable
+          await new Promise(resolve => setTimeout(resolve, 500));
+          
+          // Use window.location for navigation in App Router
+          const url = `/user-info?username=${encodeURIComponent(world_username)}`;
+          console.log("Redirecting to:", url);
+          window.location.href = url;
+          return;
+        } catch (error) {
+          console.error("Navigation error:", error);
+        }
+      }
+      
+      // Wait before next attempt
+      await new Promise(resolve => setTimeout(resolve, delay));
+      attempts++;
     }
+    
+    console.error("Failed to get username after multiple attempts");
+    alert("Failed to get user information. Please try connecting your wallet again.");
   };
 
   // Handle verification success

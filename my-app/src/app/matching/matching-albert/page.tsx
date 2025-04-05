@@ -25,7 +25,7 @@ export default function Page() {
         </Typography>
 
         <main className="bg-cream flex items-center justify-center">
-          <ProfileCard imageUrl={"/Albert.png"} />
+          <ProfileCard imageUrl={"/Albert.png"} username="albert.4846" />
         </main>
       </div>
     </div>
